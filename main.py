@@ -21,6 +21,13 @@ def _get_tmdb_headers():
         "User-Agent": "StreamlineBE/1.0 Python/FastAPI" # Updated User-Agent
     }
 
+@app.get("/")
+async def read_root():
+    """
+    Root endpoint to check if the API is running.
+    """
+    return {"message": "Streamline Backend API is running"}
+
 @app.get("/trending/{media_type}")
 async def get_trending(media_type: str, page: int = 1):
     """
