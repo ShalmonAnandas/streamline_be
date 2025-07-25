@@ -1,0 +1,683 @@
+{
+	"info": {
+		"_postman_id": "streamline-backend-api",
+		"name": "Streamline Backend API",
+		"description": "Postman collection for the Streamline Backend API - A FastAPI application that integrates with TMDB (The Movie Database) API to provide movie and TV show data.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "streamline-api"
+	},
+	"item": [
+		{
+			"name": "Health Check",
+			"item": [
+				{
+					"name": "Root - Health Check",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response contains message\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"Streamline Backend API is running\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								""
+							]
+						},
+						"description": "Simple health check endpoint to verify the API is running."
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints for checking API health and status."
+		},
+		{
+			"name": "Trending Content",
+			"item": [
+				{
+					"name": "Get Trending Movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has results\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('results');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/trending/movie?page=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"trending",
+								"movie"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number (default: 1)"
+								}
+							]
+						},
+						"description": "Fetches trending movies from TMDB."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Trending TV Shows",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has results\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('results');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/trending/tv?page=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"trending",
+								"tv"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number (default: 1)"
+								}
+							]
+						},
+						"description": "Fetches trending TV shows from TMDB."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Trending All Media",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has results\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('results');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/trending/all?page=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"trending",
+								"all"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number (default: 1)"
+								}
+							]
+						},
+						"description": "Fetches trending content across all media types from TMDB."
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints for fetching trending movies and TV shows."
+		},
+		{
+			"name": "Search",
+			"item": [
+				{
+					"name": "Multi Search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has results\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('results');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/search/multi?query=avengers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"search",
+								"multi"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "avengers",
+									"description": "Search query string (required)"
+								}
+							]
+						},
+						"description": "Searches TMDB across multiple media types (movies, TV shows, people)."
+					},
+					"response": []
+				},
+				{
+					"name": "Multi Search - Breaking Bad",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has results\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('results');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/search/multi?query=breaking bad",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"search",
+								"multi"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "breaking bad",
+									"description": "Search query string (required)"
+								}
+							]
+						},
+						"description": "Example search for 'Breaking Bad' across multiple media types."
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints for searching across multiple media types."
+		},
+		{
+			"name": "Media Details",
+			"item": [
+				{
+					"name": "Get Movie Details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has title\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('title');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/details/movie/299536",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"details",
+								"movie",
+								"299536"
+							]
+						},
+						"description": "Fetches details for a specific movie. Example: Avengers: Infinity War (ID: 299536)."
+					},
+					"response": []
+				},
+				{
+					"name": "Get TV Show Details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has name\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('name');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/details/tv/1396",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"details",
+								"tv",
+								"1396"
+							]
+						},
+						"description": "Fetches details for a specific TV show. Example: Breaking Bad (ID: 1396)."
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints for fetching detailed information about specific media items."
+		},
+		{
+			"name": "Recommendations",
+			"item": [
+				{
+					"name": "Get Movie Recommendations",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has results\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('results');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/recommendations/movie/299536?language=en-US&page=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"recommendations",
+								"movie",
+								"299536"
+							],
+							"query": [
+								{
+									"key": "language",
+									"value": "en-US",
+									"description": "Language code (default: en-US)"
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number (default: 1)"
+								}
+							]
+						},
+						"description": "Fetches movie recommendations based on a specific movie. Example: Recommendations for Avengers: Infinity War."
+					},
+					"response": []
+				},
+				{
+					"name": "Get TV Show Recommendations",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has results\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('results');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/recommendations/tv/1396?language=en-US&page=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"recommendations",
+								"tv",
+								"1396"
+							],
+							"query": [
+								{
+									"key": "language",
+									"value": "en-US",
+									"description": "Language code (default: en-US)"
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number (default: 1)"
+								}
+							]
+						},
+						"description": "Fetches TV show recommendations based on a specific TV show. Example: Recommendations for Breaking Bad."
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints for fetching recommendations based on specific media items."
+		},
+		{
+			"name": "TV Season Details",
+			"item": [
+				{
+					"name": "Get Season Details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has episodes\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('episodes');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/tv/1396/season/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tv",
+								"1396",
+								"season",
+								"1"
+							]
+						},
+						"description": "Fetches details for a specific TV show season. Example: Breaking Bad Season 1."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Season Details - Game of Thrones S1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has episodes\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('episodes');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/tv/1399/season/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tv",
+								"1399",
+								"season",
+								"1"
+							]
+						},
+						"description": "Fetches details for Game of Thrones Season 1."
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints for fetching TV season details and episodes."
+		},
+		{
+			"name": "IMDB Integration",
+			"item": [
+				{
+					"name": "Find TMDB from IMDB ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has imdb_id\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('imdb_id');",
+									"});",
+									"",
+									"pm.test(\"Response has results\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('results');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/find/imdb/tt4154756",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"find",
+								"imdb",
+								"tt4154756"
+							]
+						},
+						"description": "Finds TMDB ID using IMDB ID as input. Example: Avengers: Infinity War (IMDB ID: tt4154756)."
+					},
+					"response": []
+				},
+				{
+					"name": "Find TMDB from IMDB ID - Breaking Bad",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has imdb_id\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('imdb_id');",
+									"});",
+									"",
+									"pm.test(\"Response has results\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('results');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/find/imdb/tt0903747",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"find",
+								"imdb",
+								"tt0903747"
+							]
+						},
+						"description": "Finds TMDB ID for Breaking Bad using IMDB ID (tt0903747)."
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints for converting between IMDB and TMDB IDs."
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://127.0.0.1:8000",
+			"type": "string",
+			"description": "Base URL for the Streamline Backend API (local development)"
+		},
+		{
+			"key": "production_url",
+			"value": "https://your-production-domain.com",
+			"type": "string",
+			"description": "Production URL for the Streamline Backend API (update with your actual domain)"
+		}
+	]
+}

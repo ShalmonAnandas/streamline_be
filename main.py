@@ -114,6 +114,50 @@ async def get_season_details(series_id: int, season_number: int):
     except requests.exceptions.RequestException as e:
         raise HTTPException(status_code=502, detail=f"Error fetching data from TMDB: {e}")
 
+@app.get("/find/imdb/{imdb_id}")
+async def find_tmdb_from_imdb(imdb_id: str):
+    """
+    Finds TMDB ID using IMDB ID as input.
+    """
+    headers = _get_tmdb_headers()
+    url = f"{TMDB_BASE_URL}/find/{imdb_id}"
+    params = {"external_source": "imdb_id"}
+    try:
+        response = requests.get(url, headers=headers, params=params)
+        response.raise_for_status()
+        data = response.json()
+        
+        # Extract TMDB ID from the response
+        tmdb_results = {}
+        if data.get("movie_results"):
+            tmdb_results["movie"] = {
+                "tmdb_id": data["movie_results"][0]["id"],
+                "title": data["movie_results"][0]["title"],
+                "media_type": "movie"
+            }
+        elif data.get("tv_results"):
+            tmdb_results["tv"] = {
+                "tmdb_id": data["tv_results"][0]["id"],
+                "title": data["tv_results"][0]["name"],
+                "media_type": "tv"
+            }
+        elif data.get("person_results"):
+            tmdb_results["person"] = {
+                "tmdb_id": data["person_results"][0]["id"],
+                "name": data["person_results"][0]["name"],
+                "media_type": "person"
+            }
+        else:
+            raise HTTPException(status_code=404, detail="No TMDB results found for the provided IMDB ID")
+        
+        return {
+            "imdb_id": imdb_id,
+            "results": tmdb_results,
+            "raw_data": data
+        }
+    except requests.exceptions.RequestException as e:
+        raise HTTPException(status_code=502, detail=f"Error fetching data from TMDB: {e}")
+
 
 if __name__ == "__main__":
     # Run the app with uvicorn.
