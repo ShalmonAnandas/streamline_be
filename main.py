@@ -153,7 +153,6 @@ async def find_tmdb_from_imdb(imdb_id: str):
         return {
             "imdb_id": imdb_id,
             "results": tmdb_results,
-            "raw_data": data
         }
     except requests.exceptions.RequestException as e:
         raise HTTPException(status_code=502, detail=f"Error fetching data from TMDB: {e}")
